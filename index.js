@@ -1,10 +1,15 @@
 var garden = document.getElementById("garden");
+garden.width = window.innerWidth;
+garden.height = window.innerHeight;
 var c = garden.getContext("2d");
-garden.style.background = 'black';
-var nodeSize = 3;
-var numNodes = 1500;
-var screenWidth = 1500;
-var screenHeight = 850;
+garden.style.background = '#000000';
+
+// c.imageSmoothingEnabled = false;
+
+var numNodes = 3000;
+var screenWidth = window.innerWidth;
+var screenHeight = window.innerHeight;
+
 var nodes = [];
 
 function initNodes() {
@@ -12,9 +17,9 @@ function initNodes() {
 		var node = {
 			x: Math.random() * screenWidth,
 			y: Math.random() * screenHeight,
-			vx: Math.random() * .9 + .4,
-			vy: Math.random() * .4 + .9,
-			size: Math.random() * 5,
+			vx: Math.random() * .5+ .2,
+			vy: Math.random() * .5 + .2,
+			size: Math.pow(Math.random(), 2) * 4 + 1,
 			opacity: "rgba(256, 256, 256, " + (Math.random() * .9 + .1) +" )"
 		};
 		nodes.push(node);
@@ -25,14 +30,14 @@ function update(nArray) {
 	for (var i = 0; i < numNodes; i++) {
 		nArray[i].x += nArray[i].vx;
 		nArray[i].y += nArray[i].vy;
-		if (nArray[i].x > screenWidth || nArray[i].y > screenHeight) {
+		if (nArray[i].x > (screenWidth + nArray[i].size) || nArray[i].y > (screenHeight + nArray[i].size)) {
 			if (Math.random() < screenWidth/(screenHeight + screenWidth)) {
 				nArray[i].x = Math.random() * screenWidth;
-				nArray[i].y = 0;
+				nArray[i].y = -nArray[i].size;
 			}
 			else {
 				nArray[i].y = Math.random() * screenHeight;
-				nArray[i].x = 0;
+				nArray[i].x = -nArray[i].size;
 			}
 		}
 	}
@@ -48,10 +53,17 @@ function draw(nArray) {
 }
 
 function drawupdate() {
-	c.clearRect(0, 0, screenWidth, screenHeight);
-	draw(nodes);
-	update(nodes);
-	requestAnimationFrame(drawupdate);
+	setTimeout(function(){
+		c.clearRect(0, 0, screenWidth, screenHeight);
+		draw(nodes);
+		update(nodes);
+		requestAnimationFrame(drawupdate);
+	}, 1000/120);
+}
+window.addEventListener('resize', resizeCanvas, false);
+function resizeCanvas() {
+	garden.width = window.innerWidth;
+	garden.height = window.innerHeight;
 }
 
 initNodes();
