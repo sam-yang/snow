@@ -2,8 +2,6 @@ var garden = document.getElementById("garden");
 garden.width = window.innerWidth;
 garden.height = window.innerHeight;
 var c = garden.getContext("2d");
-garden.style.background = '#000000';
-
 // c.imageSmoothingEnabled = false;
 
 var numNodes = 3000;
