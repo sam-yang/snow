@@ -30,8 +30,8 @@ var numNodes = 2000;
 var screenWidth = window.innerWidth;
 var screenHeight = window.innerHeight;
 var gradient = c.createLinearGradient(0, 0, 0, screenHeight);
-gradient.addColorStop(0, "#659B93");
-gradient.addColorStop(1, "#E5F5CD");
+gradient.addColorStop(0, "#609B84");
+gradient.addColorStop(1, "#DEF0C9");
 
 
 var nodes = [];
